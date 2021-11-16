@@ -5,7 +5,7 @@ export const blobToBase64 = (blob: Blob): Promise<string | undefined> => {
     reader.onloadend = () => {
       const result = reader.result
       if (typeof result === "string") {
-        resolve(result)
+        resolve(result.slice(22))
       } else {
         resolve(undefined)
       }
