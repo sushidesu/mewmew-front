@@ -7,7 +7,7 @@ type UseSketchProps = {
 
 export const useSketch = ({
   color = "#000",
-}: UseSketchProps): [() => Promise<Blob | null>, () => JSX.Element] => {
+}: UseSketchProps): [() => Promise<Blob | null>, () => void, () => JSX.Element] => {
   const [drag, setDrag] = useState(false)
   const [fromX, setFromX] = useState(0)
   const [fromY, setFromY] = useState(0)
@@ -71,6 +71,17 @@ export const useSketch = ({
     [drag, fromX, fromY]
   )
 
+  const reset = useCallback(() => {
+    if (canvas.current === null) {
+      return
+    }
+    const ctx = canvas.current?.getContext("2d")
+    if (ctx === null) {
+      return
+    }
+    ctx.clearRect(0, 0, canvas.current.width, canvas.current.height)
+  }, [])
+
   const getBlob = useCallback(
     () =>
       new Promise<Blob | null>((resolve) => {
@@ -87,6 +98,7 @@ export const useSketch = ({
 
   return [
     getBlob,
+    reset,
     () => (
       <Sketch
         width={"100px"}
