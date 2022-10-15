@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useSketch } from "../../model/Sketch"
 import { blobToBase64 } from "../../../utils/blobToBase64"
+import styles from "./Home.module.css"
 
 export const Home = () => {
   const [getBlob, resetSketch, renderSketch] = useSketch({ color: "#000" })
@@ -25,7 +26,7 @@ export const Home = () => {
   }
 
   return (
-    <main>
+    <main className={styles["container"]}>
       <h2>Draw Circle</h2>
       {renderSketch()}
       <button onClick={() => {
